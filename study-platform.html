@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Literata:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F7FA;--card:#fff;--ink:#13263A;--mut:#576879;--line:#D5DDE6;--acc:#1D5E8A;--on:#fff;--hl:#F7DC6F;--ok:#1B7A4D;--okb:#E2F3EA;--bad:#B03F2E;--badb:#FAE7E3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1923;--card:#152433;--ink:#E7EEF5;--mut:#9DB0C2;--line:#2B3D4F;--acc:#74B6E3;--on:#0E1923;--ok:#5CC38C;--okb:#143A2A;--bad:#F29180;--badb:#3E221D}}
+:root[data-theme="dark"]{--bg:#0E1923;--card:#152433;--ink:#E7EEF5;--mut:#9DB0C2;--line:#2B3D4F;--acc:#74B6E3;--on:#0E1923;--ok:#5CC38C;--okb:#143A2A;--bad:#F29180;--badb:#3E221D}
+:root{color-scheme:light}@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark}}:root[data-theme="dark"]{color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Atkinson Hyperlegible',system-ui,sans-serif}
+h1,h2,h3{font-family:Literata,Georgia,serif;margin:0 0 .4em;line-height:1.25}
+h1{font-size:26px}h2{font-size:21px}h3{font-size:17px}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px 40px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:18px 0 12px}
+header p{margin:0;color:var(--mut);font-size:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:none;padding:8px 18px}
+.seg button[aria-pressed=true]{background:var(--acc);color:var(--on);font-weight:700}
+nav{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;margin-bottom:18px}
+nav button{border:0;background:none;padding:10px 14px;border-bottom:3px solid transparent;white-space:nowrap}
+nav button[aria-current=true]{border-color:var(--acc);font-weight:700}
+.grid{display:grid;grid-template-columns:230px 1fr;gap:20px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.list button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.list button[aria-current=true]{border-color:var(--acc);box-shadow:inset 3px 0 0 var(--acc)}
+.tag{background:var(--hl);color:#13263A;border-radius:6px;padding:1px 7px;font-size:13px;margin-left:6px}
+.btn{background:var(--acc);color:var(--on);border:0;border-radius:10px;padding:9px 16px;font-weight:700;margin:2px 4px 2px 0}
+.btn.ghost{background:none;color:var(--acc);border:1px solid var(--acc)}
+input,textarea,select{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+label{display:block;margin-bottom:12px}
+label.o{padding:6px 0;margin:0}
+.ok{background:var(--okb);color:var(--ok)}.bad{background:var(--badb);color:var(--bad)}
+.q{border-top:1px solid var(--line);padding:14px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stats b{display:block;font:700 28px Literata,Georgia,serif}
+.bar{height:10px;background:var(--line);border-radius:5px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
+.msg{padding:10px 12px;border-radius:10px;margin:8px 0;max-width:80%}
+.me{background:var(--acc);color:var(--on);margin-left:auto}.ai{background:var(--card);border:1px solid var(--line)}
+.note{color:var(--mut);font-size:14px}
+mark{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 0/100% 100%;color:#13263A;padding:0 2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+@media(prefers-reduced-motion:no-preference){mark{animation:sweep .6s ease-out}@keyframes sweep{from{background-size:0 100%}}}
+article p{max-width:68ch;font-size:17px;line-height:1.65}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+button{transition:background-color .15s,border-color .15s,opacity .15s,transform .08s}
+button:active:not(:disabled){transform:translateY(1px)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.work{position:fixed;top:0;left:0;right:0;height:3px;z-index:30;background:linear-gradient(90deg,var(--acc),var(--hl),var(--acc));background-size:200% 100%;animation:wk 1.1s linear infinite}
+@keyframes wk{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sents=b=>b.match(/[^.!?]*[.!?]+\s*|[^.!?]+$/g)||[b];
+const C=[
+{t:'Introduction to Software Architecture',v:1,s:1,b:'Software architecture is the set of significant decisions about how a system is organized: its components, how they connect, and the principles that guide its design and evolution. A decision is architectural if reversing it later would need several teams and a budget. Architecture erodes when the running system drifts away from the documented design.',qs:[{q:'Which decision is most clearly architectural?',o:['Naming a local variable','Splitting the system into separate services','Choosing a button colour'],a:1,topic:'Architectural decisions'},{q:'A mobile app skips the documented layers and calls the data layer directly. What is this called?',o:['Architecture erosion','Unit testing','Iteration'],a:0,topic:'Architecture erosion'}]},
+{t:'Software Development Life Cycle',v:1,s:1,b:'The SDLC moves through planning, analysis, design, implementation, testing, deployment and maintenance. Waterfall runs the phases in order, incremental delivers working slices, and the spiral model picks each loop by the biggest remaining risk. Mistakes found late cost far more to fix than mistakes found early.',qs:[{q:'What decides what gets built in the next spiral loop?',o:['The fixed phase order','The largest remaining risk','The customer priority list'],a:1,topic:'Spiral model'},{q:'Which phase comes right after analysis?',o:['Testing','Design','Deployment'],a:1,topic:'SDLC phases'}]},
+{t:'Requirements Engineering',v:1,s:1,b:'Requirements say what a system must do and how well it must do it. Functional requirements describe behaviour, such as letting a student practice a chapter. Non-functional requirements describe qualities such as speed, security and privacy.',qs:[{q:'Which is a non-functional requirement?',o:['Students can submit answers','Scores appear within a few seconds','Professors can upload material'],a:1,topic:'Non-functional requirements'},{q:'Letting a student practice a chapter is an example of a…',o:['Functional requirement','Quality attribute','Deployment target'],a:0,topic:'Functional requirements'}]}];
+const A=[{u:'Amina',c:0,s:2,n:2,w:[]},{u:'Omar',c:0,s:1,n:2,w:[1]},{u:'Amina',c:1,s:1,n:2,w:[0]},{u:'Yusuf',c:1,s:0,n:2,w:[0,1]},{u:'Layla',c:1,s:1,n:2,w:[0]},{u:'Layla',c:2,s:2,n:2,w:[]},{u:'Omar',c:2,s:1,n:2,w:[0]}];
+const O={0:12,1:9,2:5},AI=[{c:0},{c:1},{c:1},{c:2}];
+const F=[{c:1,t:'The spiral model needs a worked example.'},{c:0,t:'More practice on architecture erosion, please.'}];
+const ds=n=>{const d=new Date(Date.now()+n*864e5);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const dd=a=>Math.round((new Date(a+'T00:00:00')-new Date(ds(0)+'T00:00:00'))/864e5);
+const dl=a=>{if(!a.due)return'';const n=dd(a.due);return 'Due '+new Date(a.due+'T00:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'})+(n<0?' ('+(-n)+(n==-1?' day':' days')+' overdue)':n==0?' (today)':n==1?' (tomorrow)':' (in '+n+' days)')};
+const dueTag=a=>a.due?`<p class="note" style="margin:0 0 8px">${esc(dl(a))}${!a.sub&&dd(a.due)<0?' <span class="tag" style="background:var(--badb);color:var(--bad)">Overdue</span>':''}</p>`:'';
+const rem=()=>AS.filter(a=>!a.sub&&a.due&&dd(a.due)<=3).sort((a,b)=>a.due<b.due?-1:1);
+const AS=[{c:1,t:'Waterfall versus spiral',due:ds(3),tasks:['Explain in two sentences how the waterfall and spiral models differ.','Describe one project where the spiral model fits better, and say why.'],sub:''}];
+const N=[{t:'New assignment: Waterfall versus spiral',k:'assign',c:1,r:0}],note=(t,k,c)=>{N.unshift({t,k,c,r:0});N.splice(20)};
+const QA=[{u:'Omar',q:'Is the spiral model used outside very large projects?',c:1,a:'',at:Date.now()}];
+const KEY='studyplatform.v1',SEED=JSON.stringify({C,A,O,AI,F,AS,N,QA});
+const apply=d=>{C.length=0;C.push(...d.C);A.length=0;A.push(...d.A);for(const k in O)delete O[k];Object.assign(O,d.O);AI.length=0;AI.push(...d.AI);F.length=0;F.push(...d.F);if(d.AS){AS.length=0;AS.push(...d.AS)}if(d.N){N.length=0;N.push(...d.N)}if(d.QA){QA.length=0;QA.push(...d.QA)}};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({C,A,O,AI,F,AS,N,QA}));S.se=0}catch(e){S.se=1}};
+const topics=x=>x.w.map((i,k)=>x.tp?x.tp[k]:(C[x.c].qs[i]||{}).topic).filter(Boolean);
+try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.C&&d.C.length)apply(d)}catch(e){}
+const T={student:[['material','Material'],['ask','Ask the AI'],['practice','Practice'],['progress','Progress'],['assign','Assignments'],['upd','Updates'],['feedback','Feedback']],professor:[['analytics','Analytics'],['students','Students'],['materials','Course material'],['assign','Assignments'],['qa','Questions'],['feedback','Student feedback']]};
+let S={r:'student',tab:'material',ch:0,hl:-1,chat:[],qz:null,res:null,x:{},msg:'',focus:0,tour:-1};
+const opn=i=>{S.ch=i;S.hl=-1;C[i].s=C[i].v;O[i]=(O[i]||0)+1};
+const stem=s=>new Set((s.toLowerCase().match(/[a-z]{4,}/g)||[]).filter(w=>!/^(what|that|this|with|from|does|have|which|about|their|when|will|into|than|they|your|each|makes|should|would|could|there|were)$/.test(w)).map(w=>w.slice(0,6)));
+function pick(q,ids=C.map((_,i)=>i)){const Q=stem(q);let b={n:0,c:ids[0],i:0};ids.forEach(c=>sents(C[c].b).forEach((s,i)=>{let n=0;stem(s).forEach(w=>Q.has(w)&&n++);if(n>b.n)b={n,c,i}}));return b}
+
+function vMat(){const c=C[S.ch];return `<div class="grid"><div class="list">${C.map((x,i)=>`<button data-a="ch" data-v="${i}" ${i==S.ch?'aria-current=true':''}>${esc(x.t)}${x.v>x.s?`<span class="tag">${x.s?'Updated':'New'}</span>`:''}</button>`).join('')}</div><article class="card"><h2>${esc(c.t)}</h2><p>${sents(c.b).map((s,i)=>i==S.hl?`<mark>${esc(s)}</mark>`:esc(s)).join('')}</p><p class="note">Version ${c.v}, uploaded by your professor</p></article></div>`}
+
+function vAsk(){return `<div class="card"><h2>Ask the AI</h2><p class="note">Answers come only from the uploaded course material. ${SM?(CL?'Replies are written live by Claude':'Replies are written live by '+((PRE[CF.p]||{}).n||'the AI'))+' from that material.':'AI is off, so replies are picked from the chapter text. Open the Claude link while signed in to Claude, or add a free API key under AI settings at the bottom of a downloaded copy.'}</p><div aria-live="polite">${S.chat.map(m=>`<div ${m.live?'id="live" ':''}class="msg ${m.me?'me':'ai'}">${m.h}</div>`).join('')||'<p>Try: What makes a decision architectural?</p>'}</div><div style="display:flex;gap:8px;margin-top:12px"><input id="qi" placeholder="Ask about any chapter" aria-label="Your question"><button class="btn" data-a="ask" ${S.busy?'disabled':''}>Ask</button></div>${S.chat.some(m=>m.me)?'<p style="margin:12px 0 0"><button class="btn ghost" data-a="qsend">Not helpful? Send my last question to the professor</button></p>':''}</div>${vMyQ()}`}
+
+function vPra(){const z=S.qz,r=S.res;
+if(z){const c=C[z.c];return `<div class="card"><h2>${esc(c.t)}</h2>${c.qs.map((q,i)=>`<div class="q"><p><b>${esc(q.q)}</b></p>${q.o.map((o,k)=>`<label class="o"><input type="radio" style="width:auto" name="q${i}" value="${k}" ${z.a[i]==k?'checked':''}> ${esc(o)}</label>`).join('')}${z.h[i]?`<p class="card"><b>Hint:</b> <mark>${esc(z.h[i])}</mark></p>`:`<button class="btn ghost" data-a="help" data-v="${i}">Need help?</button>`}</div>`).join('')}${z.err?'<p class="card bad">Answer every question before you submit.</p>':''}<button class="btn" data-a="submit">Submit answers</button></div>`}
+if(r){const c=C[r.c];return `<div class="card"><h2>${r.s} of ${r.n} correct</h2><div class="bar"><i style="width:${100*r.s/r.n}%"></i></div>${r.w.map((i,k)=>{const q=r.wq[k],p=pick(q.q,[r.c]);return `<div class="card" style="border-left:4px solid var(--bad);margin:12px 0"><b>${esc(q.q)}</b><br>Your answer: ${esc(q.o[r.a[i]])}<br>Right answer: ${esc(q.o[q.a])}<br><button class="btn ghost" data-a="goto" data-v="${r.c}:${p.i}">Read the part to review</button></div>`}).join('')||'<p>All correct. Nothing to review.</p>'}<p class="note">Results are saved for your professor’s analytics.</p><button class="btn" data-a="start" data-v="${r.c}">Practice again</button><button class="btn ghost" data-a="done">Choose another chapter</button><button class="btn ghost" data-a="tab" data-v="progress">See my study plan</button></div>`}
+return `<div class="card"><h2>Practice</h2><p>Pick a chapter. Questions come from your professor’s material, and you get a score at the end.</p><div class="list">${C.map((x,i)=>`<button data-a="start" data-v="${i}">${esc(x.t)} <span class="note">${x.qs.length} questions</span></button>`).join('')}</div></div>`}
+
+function vFb(){return `<div class="card"><h2>Give feedback</h2><p class="note">Your professor reads this and can update the material.</p><label>Chapter<select id="fc">${C.map((c,i)=>`<option value="${i}">${esc(c.t)}</option>`).join('')}</select></label><label>Your feedback<textarea id="ft" rows="4"></textarea></label><button class="btn" data-a="fb">Send feedback</button></div>`}
+
+function vAna(){const tt=A.reduce((a,x)=>a+x.n,0),ss=A.reduce((a,x)=>a+x.s,0),op=Object.values(O).reduce((a,b)=>a+b,0),wr={};
+A.forEach(x=>topics(x).forEach(t=>wr[t]=(wr[t]||0)+1));
+const st=Object.entries(wr).sort((a,b)=>b[1]-a[1]).slice(0,3);
+return `<div class="stats">${[[A.length,'Practice attempts'],[(tt?Math.round(100*ss/tt):0)+'%','Average score'],[op,'Chapter opens'],[AI.length,'AI questions and help requests']].map(([n,l])=>`<div class="card"><b>${n}</b>${l}</div>`).join('')}</div>
+<div class="card"><h2>By chapter</h2>${C.map((c,i)=>{const at=A.filter(x=>x.c==i),n=at.reduce((a,x)=>a+x.n,0),s=at.reduce((a,x)=>a+x.s,0),p=n?Math.round(100*s/n):0;return `<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span>${esc(c.t)}</span><span class="note">${O[i]||0} opens, ${at.length} attempts, ${n?p+'% average':'not practiced yet'}</span></div><div class="bar"><i style="width:${p}%"></i></div></div>`}).join('')}</div>
+<div class="card" style="margin-top:18px"><h2>Topic heat map</h2><p class="note">Darker means more students missed it. Green means no misses yet.</p>${C.map(c=>`<p style="margin:12px 0 4px"><b>${esc(c.t)}</b></p><div style="display:flex;flex-wrap:wrap;gap:8px">${[...new Set(c.qs.map(q=>q.topic))].map(t=>{const n=wr[t]||0,mx=Math.max(1,...Object.values(wr)),bg=n?`color-mix(in srgb,var(--bad) ${Math.round(10+45*n/mx)}%,var(--card))`:'color-mix(in srgb,var(--ok) 18%,var(--card))';return `<span style="background:${bg};border:1px solid var(--line);border-radius:8px;padding:6px 10px">${esc(t)}<br><small>${n?`missed ${n} ${n==1?'time':'times'}`:'no misses'}</small></span>`}).join('')}</div>`).join('')}<p class="note">Sample class data plus everything you do as a student.</p></div>${vRep()}`}
+
+function vMats(){return `${SM?'<p class="note">Summaries and quizzes are written by the AI from the chapter text.</p>':'<p class="note">AI is off, so summaries and quizzes are built from the chapter text. Open the Claude link while signed in to Claude, or add a free API key under AI settings at the bottom of a downloaded copy.</p>'}`+C.map((c,i)=>`<div class="card" style="margin-bottom:14px"><h3>${esc(c.t)} <span class="note">version ${c.v}</span></h3><textarea id="b${i}" rows="4" aria-label="Chapter text">${esc(c.b)}</textarea><p><button class="btn" data-a="pub" data-v="${i}">Publish update</button><button class="btn ghost" data-a="sum" data-v="${i}" ${S.busy?'disabled':''}>Summarize chapter</button><button class="btn ghost" data-a="quiz" data-v="${i}" ${S.busy?'disabled':''}>Generate quiz</button></p>${S.x['s'+i]?`<p><b>Summary:</b> ${esc(S.x['s'+i])}</p>`:''}${S.x['q'+i]?`${S.x['e'+i]?`<p class="note">${esc(S.x['e'+i])}</p>`:''}<ol>${c.qs.map(q=>`<li>${esc(q.q)}${q.g?' <span class="tag">Generated</span>':''}</li>`).join('')}</ol>`:''}</div>`).join('')+`<div class="card"><h3>Add a chapter</h3><label>Upload slides or notes (.pptx, .txt or .md)<input type="file" id="nf" accept=".pptx,.txt,.md"></label><p class="note" id="nfs">Or type the title and text below.</p><label>Title<input id="nt"></label><label>Text<textarea id="nb" rows="4"></textarea></label><button class="btn" data-a="add">Add chapter</button></div>`}
+
+function vPFb(){return `<div class="card"><h2>Student feedback</h2>${F.map(f=>`<p>${esc(f.t)}<br><span class="note">On ${esc(C[f.c].t)}</span></p>`).join('')||'<p>No feedback yet. Switch to Student and send some.</p>'}<p class="note">${SM?'The AI can turn feedback into a suggested chapter update.':'In this demo, a suggestion adds a note built from the feedback.'}</p></div>${[...new Set(F.map(f=>f.c))].filter(c=>C[c]).map(c=>`<div class="card" style="margin-top:14px"><h3>${esc(C[c].t)}</h3><p class="note">${F.filter(f=>f.c==c).length} feedback ${F.filter(f=>f.c==c).length==1?'item':'items'}</p>${S.sg&&S.sg[c]?`<label>Suggested chapter text, edit if you like<textarea id="sg${c}" rows="6">${esc(S.sg[c])}</textarea></label><button class="btn" data-a="fapply" data-v="${c}">Apply update</button><button class="btn ghost" data-a="fdisc" data-v="${c}">Discard</button>`:`<button class="btn ghost" data-a="fsug" data-v="${c}" ${S.busy?'disabled':''}>Suggest an update</button>`}</div>`).join('')}`}
+
+function vCfg(){return `<div class="card" style="margin-bottom:18px"><h2>AI settings</h2><p class="note">Paste your own API key. It stays in this browser and is sent only to the provider you pick. Free tiers may use your prompts to improve their models, so keep private material out. This works in a downloaded copy, not inside the Claude link.</p><label>Provider<select id="cp">${[['gemini','Google Gemini (free key)'],['groq','Groq (free key)'],['openrouter','OpenRouter (free models)'],['ollama','Ollama (on this PC, no key)'],['off','Off']].map(([v,l])=>`<option value="${v}" ${CF.p==v?'selected':''}>${l}</option>`).join('')}</select></label><label>API key<input id="ck" type="password" autocomplete="off" value="${esc(CF.key||'')}"></label><label>Model<input id="cm" value="${esc(CF.model||PRE.gemini.m)}"></label><p class="note">Get a free key at aistudio.google.com/apikey (Gemini), console.groq.com/keys (Groq) or openrouter.ai/keys (OpenRouter). Free limits are small, so if you see a limit message, wait a minute or try another model. Model names change, so copy a current one from the provider if the test fails. For Ollama, start it with OLLAMA_ORIGINS=* so this page can reach it.</p><button class="btn" data-a="csave" ${S.busy?'disabled':''}>Save and test</button><button class="btn ghost" data-a="cclose">Close</button><p class="note">${esc(S.cm||'')}</p></div>`}
+
+function vRep(){return `<div class="card" style="margin-top:18px"><h2>Class report</h2>${S.rep?`<p>${fmt(S.rep)}</p>`:'<p>Get a short report on how the class is doing and what to teach next.</p>'}<button class="btn" data-a="rep" ${S.busy?'disabled':''}>${S.rep?'Write it again':'Write the report'}</button></div>`}
+
+function digest(){const wr={};A.forEach(x=>topics(x).forEach(t=>wr[t]=(wr[t]||0)+1));
+ const ch=C.map((c,i)=>{const at=A.filter(x=>x.c==i),n=at.reduce((a,x)=>a+x.n,0),s=at.reduce((a,x)=>a+x.s,0);return{chapter:c.t,opens:O[i]||0,attempts:at.length,averagePercent:n?Math.round(100*s/n):null,feedbackItems:F.filter(f=>f.c==i).length}});
+ return{attempts:A.length,aiQuestionsAndHelp:AI.length,chapters:ch,topicsMissed:wr,questionsWaiting:QA.filter(x=>!x.a).length,assignments:AS.map(a=>({title:a.t,submitted:!!a.sub,feedbackReleased:!!a.rel,due:a.due||null}))}}
+
+function fbk(d){const t=Object.entries(d.topicsMissed).sort((a,b)=>b[1]-a[1]),w=d.chapters.filter(c=>c.averagePercent!=null).sort((a,b)=>a.averagePercent-b.averagePercent)[0],u=d.chapters.filter(c=>!c.attempts).map(c=>c.chapter);
+ return 'Summary\n'+d.attempts+' practice attempts so far.'+(w?' Lowest average: '+w.chapter+' ('+w.averagePercent+'%).':'')+'\n\nWhere students struggled\n'+(t.length?t.slice(0,3).map(([k,n])=>k+' (missed '+n+(n==1?' time':' times')+')').join(', ')+'.':'No wrong answers yet.')+'\n\nSuggested next steps\n'+(t.length?'Review '+t[0][0]+' in class. ':'')+(u.length?'Encourage practice on '+u.join(', ')+'. ':'')+(d.chapters.some(c=>c.feedbackItems)?'Read the waiting student feedback.':'')}
+
+const TOUR=[
+{t:'What this is',d:'A study platform for a course. Professors upload the material. Students read it, ask the AI, practice and get scored. The results flow back, so professors see where students get stuck.',r:'student',tab:'material'},
+{t:'Students read and ask',d:'Students open a chapter and ask the AI questions. It answers from that material only.',r:'student',tab:'ask'},
+{t:'Practice and get scored',d:'Students practice a chapter, ask for hints and get a score. Wrong answers point back to the exact part to re-read.',r:'student',tab:'practice'},
+{t:'Professors see the picture',d:'Every attempt feeds the analytics and the topic heat map, so professors see which topics students miss.',r:'professor',tab:'analytics'},
+{t:'Feedback improves the course',d:'Student feedback becomes a suggested chapter update. Publishing it tells students the material changed.',r:'professor',tab:'feedback'}];
+
+function vTour(){const k=S.tour,s=TOUR[k];return `<div role="dialog" aria-label="Tour" class="card" style="position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:560px;margin:0 auto;z-index:20;box-shadow:0 8px 30px rgba(0,0,0,.25)"><p class="note" style="margin:0">Step ${k+1} of ${TOUR.length}</p><h3>${esc(s.t)}</h3><p style="margin:0 0 12px">${esc(s.d)}</p>${k?'<button class="btn ghost" data-a="tback">Back</button>':''}<button class="btn" data-a="tnext">${k<TOUR.length-1?'Next':'Finish'}</button><button class="btn ghost" data-a="tend">Skip tour</button></div>`}
+
+function cands(){const M=A.filter(x=>x.me),out=[],wk={};
+ AS.map((a,i)=>({a,i})).filter(x=>!x.a.sub).sort((x,y)=>(x.a.due||'9')<(y.a.due||'9')?-1:1).forEach(({a,i})=>out.push({id:'a'+i,t:'Submit the assignment “'+a.t+'”',tab:'assign',why:a.due?dl(a)+'.':'It is open and your professor reads your answer.'}));
+ M.forEach(x=>topics(x).forEach(t=>{const k=x.c+'|'+t;wk[k]=(wk[k]||0)+1}));
+ Object.entries(wk).sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(([k,n])=>{const j=k.indexOf('|'),c=+k.slice(0,j),t=k.slice(j+1);if(C[c])out.push({id:'w'+k,t:'Review '+t+' in '+C[c].t,go:c+':-1',why:'You missed it '+n+(n==1?' time.':' times.')})});
+ N.filter(n=>!n.r&&n.k=='ch'&&C[n.c]).slice(0,1).forEach(n=>out.push({id:'u'+n.c,t:'Read the updated chapter '+C[n.c].t,go:n.c+':-1',why:'Your professor changed it.'}));
+ C.forEach((c,i)=>{if(!M.some(x=>x.c==i))out.push({id:'p'+i,t:'Practice '+c.t,tab:'practice',why:'You have not practiced this chapter yet.'})});
+ return out.slice(0,5)}
+
+function vPlan(){const P=S.plan;return `<div class="card" style="margin-bottom:18px"><h2>Study plan</h2>${P?`<ol>${P.map((s,i)=>`<li style="margin-bottom:10px"><b>${esc(s.t)}</b><br><span class="note">${esc(s.why)}</span><br><button class="btn ghost" data-a="pgo" data-v="${i}">Open</button></li>`).join('')}</ol>`:'<p>Get a short list of what to do next, based on your practice, open assignments and updates.</p>'}<button class="btn" data-a="plan" ${S.busy?'disabled':''}>${P?'Refresh my plan':'Make my plan'}</button><p class="note">${esc(S.pm||'')}</p></div>`}
+
+function vProg(){return vPlan()+vProg0()}
+function vProg0(){const M=A.filter(x=>x.me);
+if(!M.length)return `<div class="card"><h2>Your progress</h2><p>You haven’t practiced yet. After your first practice, your scores and weak topics show up here.</p><button class="btn" data-a="tab" data-v="practice">Start practicing</button></div>`;
+const tt=M.reduce((a,x)=>a+x.n,0),ss=M.reduce((a,x)=>a+x.s,0),wk={};
+M.forEach(x=>topics(x).forEach(t=>{const k=x.c+'|'+t;wk[k]=(wk[k]||0)+1}));
+const st=Object.entries(wk).sort((a,b)=>b[1]-a[1]).slice(0,3);
+return `<div class="stats">${[[M.length,'Practice attempts'],[Math.round(100*ss/tt)+'%','Average score'],[new Set(M.map(x=>x.c)).size+' of '+C.length,'Chapters practiced']].map(([n,l])=>`<div class="card"><b>${n}</b>${l}</div>`).join('')}</div><div class="card"><h2>By chapter</h2>${C.map((c,i)=>{const at=M.filter(x=>x.c==i),b=at.length?Math.round(100*Math.max(...at.map(x=>x.s/x.n))):0;return `<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span>${esc(c.t)}</span><span class="note">${at.length?`best ${b}%, ${at.length} ${at.length==1?'attempt':'attempts'}`:'not practiced yet'}</span></div><div class="bar"><i style="width:${b}%"></i></div></div>`}).join('')}</div><div class="card" style="margin-top:18px"><h2>Review next</h2>${st.map(([k,n])=>{const j=k.indexOf('|'),t=k.slice(j+1);return `<p><mark>${esc(t)}</mark> missed ${n} ${n==1?'time':'times'}<br><button class="btn ghost" data-a="goto" data-v="${k.slice(0,j)}:-1">Review chapter</button></p>`}).join('')||'<p>No wrong answers yet. Try another chapter.</p>'}</div>`}
+
+function vStu(){const by={};A.forEach(x=>{const u=x.me?'Demo student (you)':x.u;(by[u]=by[u]||[]).push(x)});
+return `<div class="card"><h2>Students</h2>${Object.entries(by).map(([u,at])=>{const n=at.reduce((a,x)=>a+x.n,0),s=at.reduce((a,x)=>a+x.s,0),p=Math.round(100*s/n),w={};at.forEach(x=>topics(x).forEach(t=>w[t]=(w[t]||0)+1));const top=Object.entries(w).sort((a,b)=>b[1]-a[1])[0];return `<div style="margin:14px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>${esc(u)}</b><span class="note">${at.length} ${at.length==1?'attempt':'attempts'}, ${p}% average${top?`, stuck on ${esc(top[0])}`:''}</span></div><div class="bar"><i style="width:${p}%"></i></div></div>`}).join('')}<p class="note">Sample students plus the demo student you play on the Student side.</p></div>`}
+
+function vAsg(){return AS.map((a,i)=>[a,i]).reverse().map(([a,i])=>`<div class="card" style="margin-bottom:14px"><h3>${esc(a.t)} <span class="note">${esc(C[a.c]?C[a.c].t:'')}</span></h3>${dueTag(a)}<ol>${a.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>${a.sub?(a.rel?`<p class="card ok"><b>Feedback from your professor:</b> ${a.rel.m}/10. ${esc(a.rel.c)}</p>`:'<p class="card ok">Submitted. Your professor can read your answer. Feedback will appear here.</p>'):`<label>Your answer<textarea id="as${i}" rows="4"></textarea></label><button class="btn" data-a="asub" data-v="${i}">Submit assignment</button>`}</div>`).join('')||'<div class="card"><h2>Assignments</h2><p>No assignments yet. Your professor publishes them here.</p></div>'}
+
+function vPAs(){return `<div class="card" style="margin-bottom:14px"><h2>New assignment</h2><label>Chapter<select id="ac">${C.map((c,i)=>`<option value="${i}">${esc(c.t)}</option>`).join('')}</select></label><label>Due date<input id="ad" type="date" value="${ds(7)}"></label><button class="btn" data-a="agen" ${S.busy?'disabled':''}>Generate and publish</button><p class="note">${esc(S.am||(SM?'The AI writes 2 or 3 tasks from the chapter text. Students see it right away.':'The demo builds tasks from the chapter questions.'))}</p></div>${AS.map((a,i)=>[a,i]).reverse().map(([a,i])=>`<div class="card" style="margin-bottom:14px"><h3>${esc(a.t)} <span class="note">${esc(C[a.c]?C[a.c].t:'')}</span></h3>${dueTag(a)}<ol>${a.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>${a.sub?`<p><b>Demo student’s answer:</b> ${a.due&&a.at&&new Date(a.at)>new Date(a.due+'T23:59:59')?'<span class="tag" style="background:var(--badb);color:var(--bad)">Late</span> ':''}${esc(a.sub)}</p>${a.rel?`<p class="card ok">Released: ${a.rel.m}/10. ${esc(a.rel.c)}</p>`:a.d?`<label>Mark out of 10<input id="mk${i}" type="number" min="0" max="10" value="${a.d.m}"></label><label>Comment for the student<textarea id="mc${i}" rows="3">${esc(a.d.c)}</textarea></label><button class="btn" data-a="mrel" data-v="${i}">Release to student</button><button class="btn ghost" data-a="mdis" data-v="${i}">Discard draft</button>`:`<button class="btn ghost" data-a="mark" data-v="${i}" ${S.busy?'disabled':''}>Mark with AI</button>`}`:'<p class="note">No submissions yet.</p>'}</div>`).join('')}`}
+
+function vUpd(){return `<div class="card"><h2>Updates</h2>${rem().map(a=>`<div class="q" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center"><span><b>Reminder:</b> ${esc(a.t)}, ${esc(dl(a).toLowerCase())}</span><button class="btn ghost" data-a="rgo">Open</button></div>`).join('')}${N.map((n,i)=>`<div class="q" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center"><span>${esc(n.t)}${n.r?'':'<span class="tag">New</span>'}</span><button class="btn ghost" data-a="nopen" data-v="${i}">Open</button></div>`).join('')||'<p>No updates yet. Your professor’s changes show up here.</p>'}${N.length?'<p><button class="btn ghost" data-a="nread">Mark all as read</button></p>':''}</div>`}
+
+function vMyQ(){const L=QA.filter(x=>!x.u).reverse();return L.length?`<div class="card" style="margin-top:18px"><h3>Your questions to the professor</h3>${L.map(x=>`<div class="q"><b>${esc(x.q)}</b><br>${x.a?`<span>${esc(x.a)}</span>`:'<span class="note">Waiting for your professor.</span>'}</div>`).join('')}</div>`:''}
+
+function vPQA(){const w=QA.map((x,i)=>({x,i})),pend=w.filter(o=>!o.x.a).reverse(),done=w.filter(o=>o.x.a).reverse();
+ const card=({x,i})=>`<div class="card" style="margin-bottom:14px"><b>${esc(x.q)}</b><p class="note" style="margin:4px 0 8px">From ${esc(x.u||'the demo student')}${x.c>=0&&C[x.c]?', about '+esc(C[x.c].t):''}</p>${x.a?`<p>${esc(x.a)}</p>`:`<label>Your answer<textarea id="qa${i}" rows="3">${esc((S.qd||{})[i]||'')}</textarea></label><button class="btn" data-a="qans" data-v="${i}">Send answer</button><button class="btn ghost" data-a="qdraft" data-v="${i}" ${S.busy?'disabled':''}>Suggest an answer</button>`}</div>`;
+ return `<h2>Student questions</h2>${pend.map(card).join('')||'<div class="card"><p>No questions waiting. Students can send one from the Ask the AI tab.</p></div>'}${done.length?'<h3 style="margin-top:22px">Answered</h3>'+done.map(card).join(''):''}`}
+
+const UC=[['View Course Material','Student','student','material',1],['Ask AI a Question','Student','student','ask',1],['Practice and Get Scored','Student','student','practice',1],['Give Feedback','Student','student','feedback',1],['Upload Course Material','Professor','professor','materials',1],['Generate Quiz or Assignment','Professor','professor','assign',1,'Quizzes are under Course material. Assignments are under Assignments.'],['Summarize Chapter','Professor','professor','materials',1],['Review Student Feedback','Professor','professor','feedback',1],['View Student Analytics','Professor','professor','analytics',1],['Study plan and progress','Student','student','progress',0],['Assignments with due dates and feedback','Student','student','assign',0],['Updates and reminders','Student','student','upd',0],['Send a question to the professor','Student','student','ask',0],['Answer student questions','Professor','professor','qa',0],['Class report','Professor','professor','analytics',0]];
+function vUC(){const row=(u,i)=>`<div class="q" style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center"><span><b>${esc(u[0])}</b> <span class="note">${u[1]}, ${esc((T[u[2]].find(t=>t[0]==u[3])||[])[1]||'')} tab</span>${u[5]?`<br><span class="note">${esc(u[5])}</span>`:''}</span><button class="btn ghost" data-a="ucgo" data-v="${i}">Show me</button></div>`;
+ return `<div class="card" style="margin-bottom:18px"><h2>Use cases in this demo</h2><p class="note">From your use case diagram, with where each one lives in the demo.</p>${UC.map((u,i)=>u[4]?row(u,i):'').join('')}<h3 style="margin-top:18px">Also in the demo, not in your use case diagram yet</h3>${UC.map((u,i)=>u[4]?'':row(u,i)).join('')}<button class="btn ghost" data-a="ucs" style="margin-top:12px">Close</button></div>`}
+
+const V={student:{material:vMat,ask:vAsk,practice:vPra,progress:vProg,assign:vAsg,upd:vUpd,feedback:vFb},professor:{analytics:vAna,students:vStu,materials:vMats,assign:vPAs,qa:vPQA,feedback:vPFb}};
+const $=id=>document.getElementById(id);
+let SM=null,CL=0;
+const fmt=t=>esc(t).replace(/\n/g,'<br>');
+const rules=q=>'You are the AI tutor inside a university Study Platform for the course BCS 305 Software Architecture. Answer ONLY from the course material below. If the answer is not in it, say you can’t find it in the course material and suggest asking the professor. Keep answers under 80 words, in plain language, and end with a line starting "Source:" that names the chapter.\n\nCourse material:\n'+(()=>{const Q=stem(q||''),all=[];C.forEach((c,ci)=>sents(c.b).forEach((s,si)=>{let n=0;stem(s).forEach(w=>Q.has(w)&&n++);all.push({ci,si,s,n})}));let top=all.filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,40);if(!top.length)top=all.filter(x=>x.si<4);top.sort((a,b)=>a.ci-b.ci||a.si-b.si);let out='',last=-1;top.forEach(x=>{if(x.ci!=last){out+='\n\n'+C[x.ci].t+': ';last=x.ci}out+=x.s.trim()+' '});return out.trim().slice(0,14000)})();
+const AIERR={rate_limited:'Too many requests, or the free limit is used up. Try again in a minute or later today.',bad_key:'The provider rejected the request. Check the API key and model in AI settings.',net:'Could not reach the AI provider. Check your connection, or that your local model is running.',ai_error:'The AI provider returned an error. Check the model name in AI settings.',not_granted:'AI is off for this page. Answers now use simple matching from the chapter text.',sampling_disabled:'AI is not available for this account. Answers now use simple matching from the chapter text.'};
+const CF=(()=>{try{return JSON.parse(localStorage.getItem('studyplatform.ai'))||{}}catch(e){return{}}})();
+const PRE={gemini:{n:'Gemini',m:'gemini-flash-latest'},groq:{n:'Groq',u:'https://api.groq.com/openai/v1',m:'llama-3.3-70b-versatile'},openrouter:{n:'OpenRouter',u:'https://openrouter.ai/api/v1',m:'meta-llama/llama-3.3-70b-instruct:free'},ollama:{n:'Ollama',u:'http://localhost:11434/v1',m:'llama3.2'}};
+function mkProv(c){const P=PRE[c.p];
+ const call=async inp=>{const g=[];(typeof inp=='string'?[{role:'user',content:inp}]:inp).forEach(x=>{const l=g[g.length-1];if(l&&l.role==x.role)l.content+='\n\n'+x.content;else g.push({role:x.role,content:x.content})});
+  let r;try{r=c.p=='gemini'?await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(c.model)+':generateContent',{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':c.key},body:JSON.stringify({contents:g.map(x=>({role:x.role=='assistant'?'model':'user',parts:[{text:x.content}]}))})}):await fetch(P.u+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+(c.key||'none')},body:JSON.stringify({model:c.model,messages:g})})}catch(e){throw{code:'net'}}
+  if(!r.ok)throw{code:r.status==401||r.status==403||(r.status==400&&c.p=='gemini')?'bad_key':r.status==429?'rate_limited':'ai_error'};
+  const j=await r.json(),t=c.p=='gemini'?((j.candidates||[])[0]?.content?.parts||[]).map(p=>p.text||'').join(''):j.choices?.[0]?.message?.content;
+  if(!t)throw{code:'ai_error'};return{text:t,truncated:false}};
+ const f=(i,o)=>call(i);
+ f.json=async p=>{const r=await call(p+'\n\nReturn only valid JSON with no code fences and no extra text.'),t=r.text.replace(/```(?:json)?/g,'').trim(),a=t.search(/[\[{]/),b=Math.max(t.lastIndexOf('}'),t.lastIndexOf(']'));return JSON.parse(t.slice(a,b+1))};
+ return f}
+document.addEventListener('change',e=>{if(e.target.id=='cp'&&$('cm'))$('cm').value=(PRE[e.target.value]||{}).m||''});
+const lost=e=>{if(e&&/^(not_granted|sampling_disabled|capability_disabled|not_declared)$/.test(e.code))SM=null};
+(window.claude?window.claude.use('sample'):Promise.resolve(null)).then(s=>{if(s){SM=s;CL=1}else if(CF.p&&CF.p!='off')SM=mkProv(CF);render()}).catch(()=>{});
+const act={
+role:r=>{S.r=r;S.tab=T[r][0][0]},
+tab:k=>{S.tab=k},
+ch:i=>{if(+i==S.ch)S.hl=-1;else opn(+i)},
+goto:v=>{const [c,i]=v.split(':');opn(+c);S.hl=+i;S.tab='material';S.r='student'},
+ask:()=>{const v=$('qi').value.trim();if(!v||S.busy)return;$('qi').value='';S.focus=1;const p=pick(v);S.chat.push({me:1,h:esc(v),raw:v});S.turns=S.turns||[];
+ if(SM){const m={h:'Thinking…',live:1};S.chat.push(m);S.turns.push({role:'user',content:v});S.busy=1;
+  SM([{role:'user',content:rules(v)},...S.turns],{cache:false,modelTier:'quick',onText:({text})=>{const e=$('live');if(e)e.innerHTML=fmt(text)}})
+  .then(r=>{S.turns.push({role:'assistant',content:r.text});m.h=fmt(r.text);AI.push({c:p.c})})
+  .catch(e=>{lost(e);S.turns.pop();m.h=esc(AIERR[e.code]||'The AI could not answer right now. Try again.')})
+  .finally(()=>{delete m.live;S.busy=0;S.focus=1;render()});return}
+ if(p.n>=2){AI.push({c:p.c});S.chat.push({h:`${esc(sents(C[p.c].b)[p.i].trim())}<br><span class="note">From ${esc(C[p.c].t)}</span><br><button class="btn ghost" data-a="goto" data-v="${p.c}:${p.i}">Read it in the chapter</button>`})}
+ else S.chat.push({h:'I can’t find that in the course material. Try different words or ask your professor.'})},
+start:i=>{S.qz={c:+i,a:{},h:{}};S.res=null},
+help:i=>{const c=S.qz.c,qq=C[c].qs[i],p=pick(qq.q,[c]),fb=()=>sents(C[c].b)[p.i].trim();AI.push({c});
+ if(!SM||S.busy){S.qz.h[i]=fb();return}
+ S.busy=1;S.qz.h[i]='Thinking…';
+ SM('Chapter text:\n'+C[c].b+'\n\nA student is stuck on this question: '+qq.q+'\nOptions: '+qq.o.join(' | ')+'\n\nGive a hint in one or two sentences that points to the right idea from the chapter. Do not say which option is correct.',{modelTier:'quick'})
+ .then(r=>{if(S.qz)S.qz.h[i]=r.text}).catch(e=>{lost(e);if(S.qz)S.qz.h[i]=fb()}).finally(()=>{S.busy=0;render()})},
+submit:()=>{const z=S.qz,qs=C[z.c].qs;if(qs.some((_,i)=>z.a[i]==null)){z.err=1;return}
+ const w=[];qs.forEach((q,i)=>z.a[i]!=q.a&&w.push(i));A.push({me:1,c:z.c,s:qs.length-w.length,n:qs.length,w,tp:w.map(i=>qs[i].topic)});S.res={c:z.c,s:qs.length-w.length,n:qs.length,w,a:z.a,wq:w.map(i=>qs[i])};S.qz=null},
+done:()=>{S.res=null},
+nopen:i=>{const n=N[i];n.r=1;if(n.k=='ch')act.goto(n.c+':-1');else S.tab=n.k=='assign'?'assign':n.k=='qa'?'ask':'practice'},
+nread:()=>{N.forEach(n=>n.r=1)},
+fsug:c=>{c=+c;const fb=F.filter(f=>f.c==c).map(f=>f.t),b=C[c].b;S.sg=S.sg||{};
+ if(!SM){S.sg[c]=b+' Update after student feedback: '+fb.join(' ');return}if(S.busy)return;S.busy=1;S.sg[c]='Writing a suggestion…';
+ SM('You are helping a professor improve a chapter. Rewrite the chapter text so it addresses the student feedback below. Keep it under 130 words, keep every correct fact, add what the students asked for, and use plain text only. Return only the new chapter text.\n\nChapter text:\n'+b+'\n\nStudent feedback:\n- '+fb.join('\n- '),{modelTier:'quick'})
+ .then(r=>{S.sg[c]=r.text.trim()}).catch(e=>{lost(e);delete S.sg[c];S.msg=AIERR[e.code]||'Could not write a suggestion. Try again.'}).finally(()=>{S.busy=0;render()})},
+fapply:c=>{c=+c;if(S.busy)return;const el=$('sg'+c),v=el?el.value.trim():'';if(!v)return;C[c].b=v;C[c].v++;note('Chapter updated from feedback: '+C[c].t,'ch',c);for(let i=F.length-1;i>=0;i--)if(F[i].c==c)F.splice(i,1);delete S.sg[c];S.msg='Update published. Students see an Updated tag, and the handled feedback is cleared.'},
+fdisc:c=>{delete S.sg[+c]},
+cfg:()=>{S.cfg=1;S.cm=''},
+cclose:()=>{S.cfg=0},
+mark:i=>{const a=AS[i],c=C[a.c]||{b:''};
+ const fb=()=>{const w=a.sub.split(/\s+/).length;a.d={m:Math.min(10,Math.round(w/10)),c:'Simple draft from the answer length ('+w+' words). Check that it covers every task and uses the chapter, then edit this comment.'}};
+ if(!SM){fb();return}if(S.busy)return;S.busy=1;
+ SM.json('You are marking a student’s written assignment. Chapter text:\n'+c.b+'\n\nTasks:\n- '+a.tasks.join('\n- ')+'\n\nStudent answer:\n'+a.sub+'\n\nReturn only JSON like {"mark":7,"comment":"two or three kind, specific sentences"} where mark is an integer from 0 to 10 for how correct the answer is against the chapter text. In the comment, name one strength and one thing to improve.',{modelTier:'quick'})
+ .then(r=>{if(!r||!r.comment)throw 0;const m=Math.round(+r.mark);if(!(m>=0&&m<=10))throw 0;a.d={m,c:String(r.comment)}}).catch(e=>{lost(e);fb()}).finally(()=>{S.busy=0;render()})},
+mrel:i=>{const a=AS[i],m=Math.max(0,Math.min(10,Math.round(+$('mk'+i).value))),c=$('mc'+i).value.trim();if(!c||isNaN(m))return;a.rel={m,c};delete a.d;note('Feedback on your assignment: '+a.t,'assign',i);S.msg='Feedback released to the student.'},
+mdis:i=>{delete AS[i].d},
+tgo:k=>{S.tour=+k;const s=TOUR[+k];S.r=s.r;S.tab=s.tab;S.cfg=0},
+tnext:()=>{if(S.tour<TOUR.length-1)act.tgo(S.tour+1);else act.tend()},
+tback:()=>{act.tgo(S.tour-1)},
+tend:()=>{S.tour=-1;try{localStorage.setItem('studyplatform.tour','1')}catch(e){}S.r='student';S.tab='material'},
+tour:()=>{act.tgo(0)},
+rgo:()=>{S.tab='assign'},
+ucs:()=>{S.uc=!S.uc},
+ucgo:i=>{const u=UC[+i];S.r=u[2];S.tab=u[3];S.uc=0},
+qsend:()=>{const m=[...S.chat].reverse().find(x=>x.me);if(!m)return;if(QA.some(x=>!x.u&&x.q==m.raw&&!x.a)){S.msg='That question is already waiting for your professor.';return}const p=pick(m.raw);QA.push({q:m.raw,c:p.n>=1?p.c:-1,a:'',at:Date.now()});S.msg='Sent to your professor. You will see the answer in Updates.'},
+qans:i=>{const v=$('qa'+i).value.trim();if(!v)return;QA[i].a=v;if(S.qd)delete S.qd[i];if(!QA[i].u)note('Your professor answered: '+QA[i].q,'qa',i);S.msg='Answer sent.'},
+qdraft:i=>{S.qd=S.qd||{};const x=QA[i],c=C[x.c],fb=()=>{const p=pick(x.q);S.qd[i]=p.n>=1?sents(C[p.c].b)[p.i].trim():''};
+ if(!SM){fb();return}if(S.busy)return;S.busy=1;
+ SM('A student asked their professor this question: '+x.q+'\n\nCourse material:\n'+(c?c.b:C.map(k=>k.b).join('\n\n')).slice(0,12000)+'\n\nDraft a short, friendly reply the professor can send, under 80 words, using only the course material. If the material does not cover the question, say what is missing so the professor can add it. Plain text only.',{modelTier:'quick'})
+ .then(r=>{S.qd[i]=r.text.trim()}).catch(e=>{lost(e);fb()}).finally(()=>{S.busy=0;render()})},
+rep:()=>{const d=digest();
+ if(!SM){S.rep=fbk(d);return}if(S.busy)return;S.busy=1;
+ SM('You are an assistant for a university professor. Using only the data below, write a short report on how the class is doing. Use plain text with no markdown symbols and three headings, each on its own line: Summary, Where students struggled, Suggested next steps. Keep it under 150 words and be specific.\n\nData:\n'+JSON.stringify(d),{modelTier:'quick'})
+ .then(r=>{S.rep=r.text.trim()}).catch(e=>{lost(e);S.rep=fbk(d)+'\n\n(The AI was unavailable, so this report is built from the numbers.)'}).finally(()=>{S.busy=0;render()})},
+csave:()=>{const p=$('cp').value,k=$('ck').value.trim(),m=$('cm').value.trim()||(PRE[p]||{}).m||'';
+ if(p!='off'&&p!='ollama'&&!k){S.cm='Paste your API key first.';return}
+ CF.p=p;CF.key=k;CF.model=m;try{localStorage.setItem('studyplatform.ai',JSON.stringify(CF))}catch(e){}
+ if(p=='off'){SM=null;S.cm='AI turned off. Simple matching is used.';return}
+ SM=mkProv(CF);S.busy=1;S.cm='Testing…';
+ SM('Reply with the single word OK.').then(()=>{S.cm='Connected to '+PRE[p].n+'. The AI features now use it.'}).catch(e=>{S.cm=AIERR[e.code]||'The test failed.'}).finally(()=>{S.busy=0;render()})},
+pgo:i=>{const s=S.plan[i];if(s.go)act.goto(s.go);else S.tab=s.tab},
+plan:()=>{const cs=cands();S.pm='';
+ const done=w=>{S.plan=cs.map(c=>({t:c.t,why:(w&&w[c.id])||c.why,tab:c.tab,go:c.go}))};
+ if(!cs.length){S.plan=null;S.pm='Nothing pending. Try another practice round.';return}
+ if(!SM||S.busy){done();return}S.busy=1;S.pm='Writing your plan…';
+ SM.json('A student is planning what to study next. Here are the possible steps as JSON: '+JSON.stringify(cs.map(c=>({id:c.id,t:c.t,why:c.why})))+'\n\nReturn only a JSON object that maps each id to one encouraging sentence, under 20 words, explaining why that step helps this student now. Use only the facts given.',{modelTier:'quick'})
+ .then(r=>{done(r&&typeof r=='object'?r:null);S.pm=''}).catch(e=>{lost(e);done();S.pm=''}).finally(()=>{S.busy=0;render()})},
+asub:i=>{const v=$('as'+i).value.trim();if(!v)return;AS[i].sub=v;AS[i].at=Date.now();S.msg='Assignment submitted.'},
+agen:()=>{const i=+$('ac').value,c=C[i],due=$('ad').value,mk=ts=>{AS.push({c:i,t:ts.t||('Assignment: '+c.t),tasks:ts.tasks,sub:'',due});const na=AS[AS.length-1];note('New assignment: '+na.t,'assign',i);S.am='Published to students: '+na.t;S.msg='Assignment published.'};
+ if(!SM){mk({tasks:c.qs.map(q=>'Explain in two sentences: '+q.q)});return}if(S.busy)return;S.busy=1;S.am='Writing the assignment…';
+ SM.json('Write a short assignment for students from this chapter text only. Return only JSON like {"t":"short title","tasks":["task 1","task 2","task 3"]} with 2 or 3 open-ended tasks that each need a written answer of a few sentences.\n\nChapter text:\n'+c.b,{modelTier:'quick'})
+ .then(r=>{if(!r||!Array.isArray(r.tasks)||!r.tasks.length)throw 0;mk({t:String(r.t||''),tasks:r.tasks.slice(0,3).map(String)})}).catch(e=>{lost(e);S.am='Could not write the assignment. Try again.'}).finally(()=>{S.busy=0;render()})},
+reset:()=>{if(!S.rs){S.rs=1;return}S.rs=0;try{localStorage.removeItem(KEY)}catch(e){}apply(JSON.parse(SEED));Object.assign(S,{chat:[],turns:[],qz:null,res:null,x:{},plan:null,rep:'',qd:{},sg:{},am:'',cm:'',pm:'',tab:T[S.r][0][0]});opn(0);S.msg='Demo data reset.'},
+fb:()=>{const t=$('ft').value.trim();if(!t)return;F.push({c:+$('fc').value,t});$('ft').value='';S.msg='Sent to your professor.'},
+sum:i=>{const c=C[i];if(!SM){S.x['s'+i]=S.x['s'+i]?0:sents(c.b)[0].trim();return}if(S.busy)return;S.busy=1;S.x['s'+i]='Writing…';
+ SM('Summarize this chapter for students in 2 short sentences. Use only this text:\n\n'+c.b,{modelTier:'quick'}).then(r=>{S.x['s'+i]=r.text}).catch(e=>{lost(e);S.x['s'+i]=AIERR[e.code]||'Could not summarize right now. Try again.'}).finally(()=>{S.busy=0;render()})},
+quiz:i=>{const c=C[i];if(!SM){S.x['q'+i]=!S.x['q'+i];return}if(S.busy)return;S.busy=1;S.x['q'+i]=1;S.x['e'+i]='Generating quiz…';
+ SM.json('Write 3 multiple-choice questions for students from this chapter text only. Return only a JSON array of 3 objects like {"q":"question","o":["option","option","option"],"a":0,"topic":"2-4 word topic"} where a is the index (0 to 2) of the correct option. Vary the position of the correct option and make the wrong options plausible.\n\nChapter text:\n'+c.b,{modelTier:'quick'})
+ .then(r=>{const g=(Array.isArray(r)?r:[]).filter(q=>q&&q.q&&Array.isArray(q.o)&&q.o.length==3&&[0,1,2].includes(q.a)).slice(0,3).map(q=>({q:String(q.q),o:q.o.map(String),a:q.a,topic:String(q.topic||c.t),g:1}));
+  if(!g.length)throw 0;c.qs=c.qs.filter(q=>!q.g).concat(g);note('New practice questions: '+c.t,'prac',i);S.x['e'+i]='Quiz generated. Students now practice '+c.qs.length+' questions on this chapter.'})
+ .catch(e=>{lost(e);S.x['e'+i]=(e&&AIERR[e.code])||'Could not generate a quiz. Try again.'}).finally(()=>{S.busy=0;render()})},
+pub:i=>{const v=$('b'+i).value.trim();if(v&&v!=C[i].b){C[i].b=v;C[i].v++;note('Chapter updated: '+C[i].t,'ch',i);S.msg='Update published. Students see an Updated tag on '+C[i].t+'.'}},
+add:()=>{const t=$('nt').value.trim(),b=$('nb').value.trim();if(!t||!b)return;const k=C.length%3,o=C.slice(0,2).map(x=>x.t);o.splice(k,0,t);
+ C.push({t,b,v:1,s:0,qs:[{q:'Which topic does this chapter cover?',o,a:k,topic:t}]});$('nt').value='';$('nb').value='';note('New chapter: '+t,'ch',C.length-1);S.msg='Chapter added. Students see it with a New tag.'}
+};
+const NAV=/^(tab|role|ch|goto|ucs|ucgo|pgo|nopen|rgo|tgo|tnext|tback|tend|tour|start|done|cfg|cclose)$/;
+function render(){
+const y=window.scrollY,ae=document.activeElement,fk=ae&&ae.id?'#'+ae.id:ae&&ae.dataset&&ae.dataset.a?'[data-a="'+ae.dataset.a+'"]'+(ae.dataset.v!=null?'[data-v="'+ae.dataset.v+'"]':''):'',keep={},msgNow=!!S.msg;
+document.querySelectorAll('#app input[id],#app textarea[id],#app select[id]').forEach(e=>{if(e.type=='file')return;const dif=e.tagName=='SELECT'?e.selectedIndex!=Math.max(0,[...e.options].findIndex(o=>o.defaultSelected)):e.value!==e.defaultValue;if(dif)keep[e.id]=e.value});
+$('app').innerHTML=`<div class="wrap">${S.busy?'<div class="work" role="status" aria-label="Working"></div>':''}<header><div><h1>Study Platform</h1><p>BCS 305 Software Architecture</p><p style="margin-top:4px">Professors upload the material. Students read, ask and practice. Results show professors where students get stuck.</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn ghost" data-a="tour" style="margin:0">Tour</button><button class="btn ghost" data-a="ucs" style="margin:0">Use cases</button><div class="seg" role="group" aria-label="Role">${['student','professor'].map(r=>`<button data-a="role" data-v="${r}" aria-pressed="${S.r==r}">${r=='student'?'Student':'Professor'}</button>`).join('')}</div></div></header><nav aria-label="Sections">${T[S.r].map(([k,l])=>`<button data-a="tab" data-v="${k}" ${S.tab==k?'aria-current="true"':''}>${l}${k=='assign'&&S.r=='student'&&AS.some(a=>!a.sub)?'<span class="tag">'+AS.filter(a=>!a.sub).length+'</span>':''}${k=='upd'&&N.filter(n=>!n.r).length+rem().length?'<span class="tag">'+(N.filter(n=>!n.r).length+rem().length)+'</span>':''}${k=='qa'&&QA.some(x=>!x.a)?'<span class="tag">'+QA.filter(x=>!x.a).length+'</span>':''}</button>`).join('')}</nav>${S.msg?`<p class="card ok" role="status">${esc(S.msg)}</p>`:''}${S.uc?vUC():''}${S.cfg&&!CL?vCfg():''}${V[S.r][S.tab]()}<p class="note" style="margin-top:24px">${S.se?'Could not save, browser storage may be full. ':'Saved in this browser only. '}<button class="btn ghost" data-a="reset">${S.rs?'Click again to reset':'Reset demo data'}</button>${CL?'':`<button class="btn ghost" data-a="cfg">AI settings: ${SM&&CF.p&&CF.p!='off'?esc(PRE[CF.p].n):'off'}</button>`}</p>${S.tour>=0?vTour()+'<div style="height:210px"></div>':''}</div>`;
+Object.entries(keep).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.value=v});
+if(fk&&!S.focus){const n=document.querySelector(fk);if(n)n.focus({preventScroll:true})}
+window.scrollTo(0,S.top||msgNow?0:y);S.top=0;
+S.msg='';const q=$('qi');if(q&&S.focus){q.focus();S.focus=0}save()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;if(b.dataset.a!='reset')S.rs=0;if(NAV.test(b.dataset.a))S.top=1;act[b.dataset.a](b.dataset.v);render()});
+document.addEventListener('change',e=>{const n=e.target.name;if(S.qz&&n&&n[0]=='q')S.qz.a[n.slice(1)]=+e.target.value});
+const dec=s=>s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'");
+async function pptxText(f){const z=await JSZip.loadAsync(f),ks=Object.keys(z.files).filter(k=>/^ppt\/slides\/slide\d+\.xml$/.test(k)).sort((a,b)=>a.match(/\d+/)[0]-b.match(/\d+/)[0]),out=[];
+ for(const k of ks){const x=await z.files[k].async('string');(x.match(/<a:p[ >][\s\S]*?<\/a:p>/g)||[]).forEach(p=>{const t=dec((p.match(/<a:t[^>]*>[^<]*<\/a:t>/g)||[]).map(r=>r.replace(/<[^>]+>/g,'')).join('')).trim();if(t)out.push(/[.!?:]$/.test(t)?t:t+'.')})}
+ return out.join(' ')}
+document.addEventListener('change',async e=>{if(e.target.id!='nf')return;const f=e.target.files[0],st=$('nfs');if(!f)return;st.textContent='Reading '+f.name+'…';
+ try{let t;if(/\.pptx$/i.test(f.name)){if(!window.JSZip)throw 1;t=await pptxText(f)}else t=(await f.text()).replace(/\s+/g,' ').trim();
+  if(!t)throw 2;const cut=t.length>20000;$('nt').value=f.name.replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ');$('nb').value=cut?t.slice(0,20000):t;
+  st.textContent='Loaded '+f.name+(cut?' (first 20,000 characters)':'')+'. Check the text, then add the chapter.'}
+ catch(x){st.textContent=x==1?'Slide import is not available here. Upload a .txt or .md file instead.':x==2?'No text found in that file.':'Could not read that file.'}});
+document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.id=='qi'){act.ask();render()}});
+opn(0);try{if(!localStorage.getItem('studyplatform.tour'))act.tgo(0)}catch(e){act.tgo(0)}render();
+</script>
+</body>
+</html>
